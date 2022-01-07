@@ -5,11 +5,11 @@ import IndexTemplate from '../templates/index'
 import SEO from '../components/seo'
 
 const IndexPage = ({ data }) => {
-  const { en } = data.site.siteMetadata.langs
+  const { ar } = data.site.siteMetadata.langs
   return (
     <>
       <SEO id='home' />
-      <IndexTemplate lang={en} />
+      <IndexTemplate lang={ar} />
     </>
   )
 }
@@ -21,7 +21,7 @@ export const query = graphql`
     site {
       siteMetadata {
         langs {
-          en
+          ar
         }
       }
     }

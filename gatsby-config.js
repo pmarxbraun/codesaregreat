@@ -1,7 +1,17 @@
 module.exports = {
   siteMetadata: {
-    siteUrl: 'https://www.yourdomain.tld',
-    title: 'codesaregreat',
+    siteUrl: 'https://codesaregreat.com',
+    title: 'Netflix hidden codes: browse through hundreds of categories',
+    titleTemplate: '%s · Netflix codes generator | CAG',
+    description:
+      'Browse through hundreds of hidden Netflix categories to find the perfect movie or serie for tonigth.',
+    langs: {
+      en: 'en',
+      es: 'es',
+      fr: 'fr',
+      de: 'de',
+      ar: 'ar',
+    },
   },
   plugins: [
     `gatsby-transformer-json`,

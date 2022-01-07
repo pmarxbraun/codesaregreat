@@ -47,12 +47,12 @@ html,
 body,
 #___gatsby,
 #gatsby-focus-wrapper {
-  height: 100%;
+  height: 100vh;
 }
 
 #gatsby-focus-wrapper {
   background-image: url(../images/netflix_background.jpg);
-  background-color: #141414c5;
+  background-color: #141414dc;
   background-blend-mode: darken;
   background-position: center;
   background-size: cover;
@@ -316,7 +316,7 @@ LAYOUT
 }
 .flex-column {
   display: flex;
-  flex-flow: column wrap;
+  flex-flow: column nowrap;
 }
 
 .grid {
