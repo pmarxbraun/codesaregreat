@@ -1,10 +1,10 @@
 module.exports = {
   siteMetadata: {
     siteUrl: 'https://codesaregreat.com',
-    title: 'Netflix hidden codes: browse through hundreds of categories',
-    titleTemplate: '%s · Netflix codes generator | CAG',
+    title: 'Browse through hundreds of categories',
+    titleTemplate: '%s | Netflix hidden categories',
     description:
-      'Browse through hundreds of hidden Netflix categories to find the perfect movie or serie for tonigth.',
+      'Do you know the secret codes of Netflix? Many hidden categories making it easier to discover films and series. Access the codes directly on this site.',
     langs: {
       en: 'en',
       es: 'es',

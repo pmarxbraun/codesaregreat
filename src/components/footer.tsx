@@ -27,7 +27,7 @@ const Footer = () => (
     <p className='margin-r-xs'>‧</p>
     <a
       style={{ color: `var(--main-color)` }}
-      href='lequipe.fr'
+      href='https://github.com/pmarxbraun/codesaregreat'
       target='_blank'
       rel='noreferrer'
     >

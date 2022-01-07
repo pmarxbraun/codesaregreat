@@ -8,7 +8,11 @@ const IndexPage = ({ data }) => {
   const { ar } = data.site.siteMetadata.langs
   return (
     <>
-      <SEO id='home' />
+      <SEO
+        id='home'
+        title='أكواد Netflix المخفية: تصفح مئات الفئات'
+        description='هل تعرف الرموز السرية لـ Netflix؟ العديد من الفئات المخفية تجعل من السهل اكتشاف الأفلام والمسلسلات. الوصول إلى الرموز مباشرة على هذا الموقع.'
+      />
       <IndexTemplate lang={ar} />
     </>
   )

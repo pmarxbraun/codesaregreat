@@ -8,7 +8,11 @@ const IndexPage = ({ data }) => {
   const { de } = data.site.siteMetadata.langs
   return (
     <>
-      <SEO id='home' />
+      <SEO
+        id='home'
+        title='Durchsuchen Sie Hunderte von Kategorien'
+        description='Kennen Sie die Geheimcodes von Netflix? Viele versteckte Kategorien erleichtern das Auffinden von Filmen und Serien. Greifen Sie direkt auf dieser Site auf die Codes zu.'
+      />
       <IndexTemplate lang={de} />
     </>
   )
