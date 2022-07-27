@@ -1,5 +1,6 @@
 import { graphql, useStaticQuery } from 'gatsby'
 import React, { useState } from 'react'
+
 import Select from 'react-select'
 import makeAnimated from 'react-select/animated'
 import Open from './svg/open'
