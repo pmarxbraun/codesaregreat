@@ -1,39 +1,26 @@
-import React from 'react'
-import { Link } from 'gatsby'
+import React from "react";
+import { Link, useStaticQuery, graphql } from "gatsby";
 
-const strings = {
-  en: {
-    title: 'Codes Are Great',
-    subtitle: 'A Netflix codes generator',
-  },
-  es: {
-    title: 'Codes Are Great',
-    subtitle: 'A Netflix codes generatores',
-  },
-  de: {
-    title: 'Codes Are Great',
-    subtitle: 'Ein Netflix-Code-Generator',
-  },
-  fr: {
-    title: 'Codes Are Great',
-    subtitle: 'Generateur de codes cachés Netflix',
-  },
-  ar: {
-    title: 'Codes Are Great',
-    subtitle: 'مولد أكواد Netflix',
-  },
-}
+const Header = () => {
+  const data = useStaticQuery(graphql`
+    {
+      site {
+        siteMetadata {
+          title
+        }
+      }
+    }
+  `);
 
-const Header = ({ lang }) => (
-  <nav
-    className='flex-row padding-sm'
-    style={{ alignItems: 'baseline', flex: 0 }}
-  >
-    <Link to='/'>
-      <h1 className='text-xl margin-r-xs glow'>{strings[lang].title}</h1>
-    </Link>
-    <p className='text-xs'>{strings[lang].subtitle}</p>
-  </nav>
-)
+  const { title } = data.site.siteMetadata;
 
-export default Header
+  return (
+    <nav className="flex flex-initial items-baseline gap-x-2 p-6 text-gray-100 shadow-md">
+      <Link to="/">
+        <h1>{title}</h1>
+      </Link>
+    </nav>
+  );
+};
+
+export default Header;

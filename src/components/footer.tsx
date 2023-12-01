@@ -1,39 +1,39 @@
-import * as React from 'react'
-import { Link } from 'gatsby'
+import * as React from "react";
+import { Link } from "gatsby";
 
-import { routes } from '../data/routes'
+import { routes } from "../data/routes";
 
 const Footer = () => (
-  <nav
-    className='flex-row padding-sm'
-    style={{
-      alignItems: 'baseline',
-      justifyContent: 'flex-end',
-      color: `var(--main-color)`,
-      flex: 0,
-    }}
-  >
-    {routes.home.map(string => (
-      <Link
-        key={string.slug}
-        style={{ color: 'var(--main-color)' }}
-        activeStyle={{ color: '#fff' }}
-        className='margin-r-xs'
-        to={`${string.slug}`}
+  <footer className="static bottom-0 left-0 z-20 flex flex-initial flex-col justify-between bg-gradient-to-l from-red-600 via-red-700 to-red-700 p-4 lg:sticky lg:flex-row">
+    <p className="text-gray-100">
+      © {new Date().getFullYear()}, Built with{" "}
+      <a href="https://monsitetranquille.fr" className="italic">
+        MonSiteTranquille
+      </a>
+    </p>
+    <div className="flex flex-col gap-3 lg:flex-row">
+      <div className="flex flex-col gap-3 lg:flex-row">
+        {routes.home.map((string) => (
+          <Link
+            key={string.slug}
+            to={`${string.slug}`}
+            activeClassName="text-gray-100"
+          >
+            {string.label}
+          </Link>
+        ))}
+      </div>
+      <p className="hidden lg:inline">|</p>
+      <a
+        className="italic text-black"
+        href="https://github.com/pmarxbraun/codesaregreat"
+        target="_blank"
+        rel="noreferrer"
       >
-        {string.label}
-      </Link>
-    ))}
-    <p className='margin-r-xs'>‧</p>
-    <a
-      style={{ color: `var(--main-color)` }}
-      href='https://github.com/pmarxbraun/codesaregreat'
-      target='_blank'
-      rel='noreferrer'
-    >
-      Github
-    </a>
-  </nav>
-)
+        Github
+      </a>
+    </div>
+  </footer>
+);
 
-export default Footer
+export default Footer;

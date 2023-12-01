@@ -1,26 +1,16 @@
-import React from 'react'
-import Header from '../components/header'
-import Footer from '../components/footer'
+import React from "react";
+
+import Header from "./header";
+import Footer from "./footer";
 
 const Layout = ({ children, lang }) => {
   return (
-    <div className='flex-column' style={{ height: '100%' }}>
+    <div className="relative flex min-h-screen flex-col bg-gradient-to-l from-red-600 via-red-700 to-red-700">
       <Header lang={lang} />
-      <main
-        className='padding-t-xl'
-        style={{
-          flex: 1,
-          display: 'flex-column',
-          width: '90%',
-          maxWidth: '620px',
-          margin: 'auto',
-        }}
-      >
-        {children}
-      </main>
+      <main className="flex-auto">{children}</main>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Layout
+export default Layout;
