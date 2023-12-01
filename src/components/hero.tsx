@@ -1,15 +1,39 @@
 import * as React from "react";
 
-export default function Hero() {
+const translations = {
+  en: {
+    title: "Discover Netflix's Hidden Categories Instantly",
+    subtitle: "Find Your Perfect Show in Seconds, Not Hours",
+  },
+  es: {
+    title: "Descubre las Categorías Ocultas de Netflix al Instante",
+    subtitle: "Encuentra tu Programa Perfecto en Segundos, No Horas",
+  },
+  fr: {
+    title: "Découvrez instantanément les catégories cachées de Netflix",
+    subtitle:
+      "Trouvez votre émission parfaite en quelques secondes, pas en heures",
+  },
+  de: {
+    title: "Entdecken Sie sofort die versteckten Kategorien von Netflix",
+    subtitle: "Finden Sie Ihre perfekte Show in Sekunden, nicht Stunden",
+  },
+  ar: {
+    title: "اكتشف الفئات الخفية في نتفليكس فورًا",
+    subtitle: "ابحث عن البرنامج المثالي في ثوانٍ وليس ساعات",
+  },
+};
+
+export default function Hero({ lang }) {
   return (
     <div className="relative isolate mb-7 overflow-hidden bg-red-700">
-      <div className="px-6 py-24 sm:px-6 sm:py-24 lg:px-8">
-        <div className="mx-auto max-w-2xl text-center">
-          <h1 className="text-3xl font-bold tracking-tight text-white sm:text-7xl">
-            Browse thousands of Netflix's hidden categories
+      <div className="px-6 py-8 sm:px-6 sm:py-24 lg:px-8">
+        <div className="mx-auto max-w-5xl text-center">
+          <h1 className="text-2xl font-bold tracking-tight text-white sm:text-7xl">
+            {translations[lang].title}
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-2xl leading-8 text-gray-50/70">
-            Don't waste time choosing the perfect show
+          <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-gray-50/70 lg:text-2xl">
+            {translations[lang].subtitle}
           </p>
         </div>
       </div>

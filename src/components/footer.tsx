@@ -4,8 +4,8 @@ import { Link } from "gatsby";
 import { routes } from "../data/routes";
 
 const Footer = () => (
-  <footer className="static bottom-0 left-0 z-20 flex flex-initial flex-col justify-between bg-gradient-to-l from-red-600 via-red-700 to-red-700 p-4 lg:sticky lg:flex-row">
-    <p className="text-gray-100">
+  <footer className="static bottom-0 left-0 z-20 flex flex-initial flex-col items-baseline justify-between bg-gradient-to-l from-red-600 to-red-700 p-4 lg:sticky lg:flex-row">
+    <p className="text-xs text-gray-100">
       © {new Date().getFullYear()}, Built with{" "}
       <a href="https://monsitetranquille.fr" className="italic">
         MonSiteTranquille

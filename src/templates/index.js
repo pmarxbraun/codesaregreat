@@ -7,8 +7,8 @@ const Generator = lazy(() => import("../components/generator"));
 
 const IndexTemplate = ({ lang }) => {
   return (
-    <Layout lang={lang}>
-      <Hero />
+    <Layout>
+      <Hero lang={lang} />
       <Suspense fallback={<div>isLoading...</div>}>
         <Generator lang={lang} />
       </Suspense>

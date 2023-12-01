@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import InfiniteScroll from "react-infinite-scroller";
 
@@ -64,49 +64,89 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
       }
     }
   `);
-
+  const inputRef = useRef<HTMLInputElement>(null);
   const codes = data.allCodesJson.nodes;
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [items, setItems] = useState<Code[]>([]);
-  const itemsPerPage = 28;
+  const scrollToInput = () => {
+    if (inputRef.current) {
+      const headerOffset = 70; // Adjust this value based on your header's height
+      const elementPosition = inputRef.current.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-  const filteredCodes = useMemo(() => {
-    return searchTerm
-      ? codes.filter((node: Code) =>
-          node.cat.toLowerCase().includes(searchTerm.toLowerCase()),
-        )
-      : codes;
-  }, [codes, searchTerm]);
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   useEffect(() => {
-    setItems(filteredCodes.slice(0, itemsPerPage));
-  }, [filteredCodes]);
+    const input = inputRef.current;
+    if (input) {
+      input.addEventListener("focus", scrollToInput);
+    }
+
+    return () => {
+      if (input) {
+        input.removeEventListener("focus", scrollToInput);
+      }
+    };
+  }, []);
+
+  const itemsPerPage = 28;
+  const [searchTerm, setSearchTerm] = useState("");
+  const [items, setItems] = useState<Code[]>([]);
+
+  // Modify the onChange handler for the input
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+
+    // If the input is being cleared, do not call scrollToInput
+    if (inputRef.current) {
+      if (
+        value.length > 0 &&
+        !inputRef.current.contains(document.activeElement)
+      ) {
+        scrollToInput();
+      }
+    }
+  };
+
+  useEffect(() => {
+    setItems(
+      codes.filter((node: Code) =>
+        node.cat.toLowerCase().includes(searchTerm.toLowerCase()),
+      ),
+    );
+  }, [searchTerm]);
+
+  useEffect(() => {
+    setItems(codes.slice(0, itemsPerPage));
+  }, []);
 
   const loadMore = (page: number) => {
     const startIndex = page * itemsPerPage;
-    const newItems: Code[] = filteredCodes.slice(
-      startIndex,
-      startIndex + itemsPerPage,
-    );
+    const newItems: Code[] = codes.slice(startIndex, startIndex + itemsPerPage);
     setItems((prevItems: Code[]) => [...prevItems, ...newItems]);
   };
 
   return (
-    <div className="flex flex-col gap-y-10 px-7 [&_>div:nth-child(2)]:grid [&_>div:nth-child(2)]:gap-2 md:[&_>div:nth-child(2)]:grid-cols-3 lg:[&_>div:nth-child(2)]:grid-cols-5">
+    <div className="flex flex-col gap-y-10 px-3 lg:px-7 [&_>div:nth-child(2)]:grid [&_>div:nth-child(2)]:auto-rows-max [&_>div:nth-child(2)]:gap-2 md:[&_>div:nth-child(2)]:grid-cols-3 lg:[&_>div:nth-child(2)]:grid-cols-5">
       <input
+        ref={inputRef}
         type="search"
         placeholder={strings[lang]?.placeholder}
         value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="mx-auto w-full max-w-5xl rounded-md border border-gray-500/25 p-2 py-4 pl-3 text-3xl"
+        onChange={handleInputChange}
+        className="mx-auto w-full max-w-5xl rounded-md border border-gray-500/25 p-2 py-4 pl-3 text-base lg:text-3xl"
       />
 
-      {filteredCodes.length > 0 ? (
+      {items.length > 0 ? (
         <InfiniteScroll
           pageStart={0}
           loadMore={loadMore}
-          hasMore={items.length < filteredCodes.length}
+          hasMore={items.length < codes.length}
           loader={
             <div className="loader" key={0}>
               Loading ...
@@ -114,20 +154,17 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
           }
         >
           {items.map((code: Code) => (
-            <div
+            <a
+              href={code.link_href}
+              target="_blank"
               key={code.id}
-              className="flex max-w-sm flex-col items-start justify-between rounded-lg border border-gray-200 bg-white p-3  shadow dark:border-gray-700 dark:bg-gray-800"
+              className="group flex flex-col items-center justify-between gap-y-3 rounded-lg bg-gradient-to-br from-red-900 via-red-800 to-red-900 p-3 py-7 text-center shadow transition-all hover:cursor-pointer hover:from-red-800 hover:via-red-900 hover:to-red-800 dark:border-gray-700 dark:bg-gray-800"
             >
-              <a href={code.link_href} target="_blank">
-                <h2 className="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white">
-                  {code.cat}
-                </h2>
-              </a>
-              <a
-                href={code.link_href}
-                className="inline-flex items-center rounded-lg bg-blue-700 px-3 py-2 text-center text-xs font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Read more
+              <h2 className="text-lg font-medium leading-6 tracking-tight text-gray-100 dark:text-white">
+                {code.cat}
+              </h2>
+              <p className="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-xs font-medium text-white ring-0 ring-inset transition-all focus:outline-none focus:ring-2 group-hover:bg-red-800 group-hover:ring-1 group-hover:ring-white/25 group-focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800">
+                Go to categorie
                 <svg
                   className="ms-2 h-3.5 w-3.5 rtl:rotate-180"
                   aria-hidden="true"
@@ -143,12 +180,14 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
                     d="M1 5h12m0 0L9 1m4 4L9 9"
                   />
                 </svg>
-              </a>
-            </div>
+              </p>
+            </a>
           ))}
         </InfiniteScroll>
       ) : (
-        <div>{strings[lang]?.emptySearch}</div>
+        <div className="m-auto !block min-h-screen max-w-sm text-center text-white">
+          {strings[lang]?.emptySearch}
+        </div>
       )}
     </div>
   );
