@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { graphql, useStaticQuery } from "gatsby";
-import InfiniteScroll from "react-infinite-scroller";
+import InfiniteScroll from "react-infinite-scroll-component";
 import { DebounceInput } from "react-debounce-input";
 
 // Define the structure for the localization strings
@@ -66,7 +66,10 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
     }
   `);
   const inputRef = useRef<HTMLInputElement>(null);
-  const codes = data.allCodesJson.nodes;
+  const codes: Code[] = data.allCodesJson.nodes;
+  const uniqueCodes: Code[] = Array.from(
+    new Map(codes.map((item) => [item["link_href"], item])).values(),
+  ) as Code[];
 
   const scrollToInput = () => {
     if (inputRef.current) {
@@ -94,7 +97,7 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
     };
   }, []);
 
-  const itemsPerPage = 20;
+  const itemsPerLoad = 20;
   const [searchTerm, setSearchTerm] = useState("");
   const [items, setItems] = useState<Code[]>([]);
 
@@ -116,51 +119,47 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
 
   useEffect(() => {
     setItems(
-      codes.filter((node: Code) =>
+      uniqueCodes.filter((node: Code) =>
         node.cat.toLowerCase().includes(searchTerm.toLowerCase()),
       ),
     );
   }, [searchTerm]);
 
   useEffect(() => {
-    setItems(codes.slice(0, itemsPerPage));
+    setItems(uniqueCodes.slice(0, itemsPerLoad));
   }, []);
 
-  const loadMore = (page: number) => {
-    const startIndex = page * itemsPerPage;
-    const newItems: Code[] = codes.slice(startIndex, startIndex + itemsPerPage);
+  const loadMore = () => {
+    const startIndex = items.length + 1;
+    const newItems: Code[] = uniqueCodes.slice(
+      startIndex,
+      startIndex + itemsPerLoad,
+    );
     setItems((prevItems: Code[]) => [...prevItems, ...newItems]);
   };
 
   return (
-    <div className="flex flex-col gap-y-10 px-3 lg:px-7 [&_>div:nth-child(2)]:grid [&_>div:nth-child(2)]:auto-rows-max [&_>div:nth-child(2)]:gap-2 md:[&_>div:nth-child(2)]:grid-cols-3 lg:[&_>div:nth-child(2)]:grid-cols-5">
+    <section className="flex flex-col items-center gap-y-6">
       <DebounceInput
         inputRef={inputRef}
         minLength={3}
-        debounceTimeout={300}
+        debounceTimeout={400}
         onChange={handleInputChange}
         value={searchTerm}
-        className="mx-auto w-full max-w-5xl rounded-md border border-gray-500/25 p-2 py-4 pl-3 text-base lg:text-3xl"
+        className="w-full max-w-5xl rounded-md border border-gray-500/25 p-2 py-4 pl-3 text-base lg:text-3xl"
         placeholder={strings[lang]?.placeholder}
       />
-      {/* <input
-        ref={inputRef}
-        type="search"
-        placeholder={strings[lang]?.placeholder}
-        value={searchTerm}
-        onChange={handleInputChange}
-        className="mx-auto w-full max-w-5xl rounded-md border border-gray-500/25 p-2 py-4 pl-3 text-base lg:text-3xl"
-      /> */}
-
       {items.length > 0 ? (
         <InfiniteScroll
-          pageStart={0}
-          loadMore={loadMore}
-          hasMore={items.length < codes.length}
-          loader={
-            <div className="loader" key={0}>
-              Loading ...
-            </div>
+          className="grid auto-rows-max gap-3 px-3 md:grid-cols-3 lg:grid-cols-5 lg:px-7"
+          dataLength={items.length} //This is important field to render the next data
+          next={loadMore}
+          hasMore={true}
+          loader={<h4>Loading...</h4>}
+          endMessage={
+            <p style={{ textAlign: "center" }}>
+              <b>Yay! You have seen it all</b>
+            </p>
           }
         >
           {items.map((code: Code) => (
@@ -199,7 +198,7 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
           {strings[lang]?.emptySearch}
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
