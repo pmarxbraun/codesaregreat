@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import InfiniteScroll from "react-infinite-scroller";
+import { DebounceInput } from "react-debounce-input";
 
 // Define the structure for the localization strings
 interface LocalizationStrings {
@@ -93,7 +94,7 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
     };
   }, []);
 
-  const itemsPerPage = 28;
+  const itemsPerPage = 20;
   const [searchTerm, setSearchTerm] = useState("");
   const [items, setItems] = useState<Code[]>([]);
 
@@ -133,14 +134,23 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
 
   return (
     <div className="flex flex-col gap-y-10 px-3 lg:px-7 [&_>div:nth-child(2)]:grid [&_>div:nth-child(2)]:auto-rows-max [&_>div:nth-child(2)]:gap-2 md:[&_>div:nth-child(2)]:grid-cols-3 lg:[&_>div:nth-child(2)]:grid-cols-5">
-      <input
+      <DebounceInput
+        inputRef={inputRef}
+        minLength={3}
+        debounceTimeout={300}
+        onChange={handleInputChange}
+        value={searchTerm}
+        className="mx-auto w-full max-w-5xl rounded-md border border-gray-500/25 p-2 py-4 pl-3 text-base lg:text-3xl"
+        placeholder={strings[lang]?.placeholder}
+      />
+      {/* <input
         ref={inputRef}
         type="search"
         placeholder={strings[lang]?.placeholder}
         value={searchTerm}
         onChange={handleInputChange}
         className="mx-auto w-full max-w-5xl rounded-md border border-gray-500/25 p-2 py-4 pl-3 text-base lg:text-3xl"
-      />
+      /> */}
 
       {items.length > 0 ? (
         <InfiniteScroll
@@ -174,9 +184,9 @@ const Generator = ({ lang }: { lang: keyof LocalizationStrings }) => {
                 >
                   <path
                     stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     d="M1 5h12m0 0L9 1m4 4L9 9"
                   />
                 </svg>
