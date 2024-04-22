@@ -2,9 +2,9 @@ module.exports = {
   siteMetadata: {
     siteUrl: "https://codesaregreat.com",
     title: "Codes_Are_Great",
-    titleTemplate: "%s | Netflix hidden categories",
+    titleTemplate: "Netflix's Secret Category Codes | %s",
     description:
-      "Do you know the secret codes of Netflix? Many hidden categories making it easier to discover films and series. Access the codes directly on this site.",
+      "Do you know the secret codes of Netflix? Many hidden categories making it easier to discover films and series. Access the codes instantly on this site.",
     langs: {
       en: "en",
       es: "es",

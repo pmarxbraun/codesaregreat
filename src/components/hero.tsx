@@ -2,7 +2,7 @@ import * as React from "react";
 
 const translations = {
   en: {
-    title: "Discover Netflix's Hidden Categories Instantly",
+    title: "Discover Netflix's Secret Category Codes",
     subtitle: "Find Your Perfect Show in Seconds, Not Hours",
   },
   es: {
