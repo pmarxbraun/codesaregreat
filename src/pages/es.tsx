@@ -10,8 +10,9 @@ const IndexPage = ({ data }) => {
     <>
       <SEO
         id='home'
-        title='Códigos ocultos de Netflix'
-        description='¿Conoces los códigos secretos de Netflix? Muchas categorías ocultas que facilitan el descubrimiento de películas y series. Acceda a los códigos directamente en este sitio.'
+        title='Categorías ocultas de Netflix'
+        description='¡Descubre las categorías secretas de Netflix! Muchos géneros ocultos que facilitan el descubrimiento de películas y series. Acceda a las categorías instantáneamente en este sitio.'
+        lang='es'
       />
       <IndexTemplate lang={es} />
     </>

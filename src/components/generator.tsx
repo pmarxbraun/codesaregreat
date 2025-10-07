@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { graphql, useStaticQuery } from "gatsby";
 import { useWindowVirtualizer } from "@tanstack/react-virtual";
 
-// Define the structure for a Code node
 interface Code {
   id: string;
   cat: string;
@@ -21,6 +20,7 @@ const Generator = ({ lang }: { lang: string }) => {
       }
     }
   `);
+
   const codes: Code[] = data.allCodesJson.nodes;
   const uniqueCodes: Code[] = Array.from(
     new Map(codes.map((item) => [item["link_href"], item])).values(),
@@ -73,7 +73,10 @@ const Generator = ({ lang }: { lang: string }) => {
         >
           {items.map((virtualRow) => {
             const startIndex = virtualRow.index * columns;
-            const rowItems = uniqueCodes.slice(startIndex, startIndex + columns);
+            const rowItems = uniqueCodes.slice(
+              startIndex,
+              startIndex + columns
+            );
 
             return rowItems.map((code) => (
               <a

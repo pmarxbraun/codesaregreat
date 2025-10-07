@@ -19,7 +19,7 @@ export const routes = {
     {
       code: "ar",
       label: "Arabic",
-      slug: "/ar",
+      slug: "/ar/",
     },
   ],
 };

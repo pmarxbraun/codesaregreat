@@ -15,8 +15,13 @@
     "clean": "gatsby clean"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-popover": "^1.1.15",
     "@tanstack/react-virtual": "^3.13.12",
     "autoprefixer": "^10.4.16",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
     "gatsby": "^5.12.11",
     "gatsby-plugin-image": "^3.12.3",
     "gatsby-plugin-manifest": "^5.12.3",
@@ -27,12 +32,14 @@
     "gatsby-source-filesystem": "^5.12.1",
     "gatsby-transformer-json": "^5.12.0",
     "gatsby-transformer-sharp": "^5.12.3",
+    "lucide-react": "^0.544.0",
     "postcss": "^8.4.31",
     "react": "^18.2.0",
     "react-debounce-input": "^3.3.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-infinite-scroll-component": "^6.1.0",
+    "tailwind-merge": "^3.3.1",
     "tailwindcss": "^3.3.5"
   },
   "devDependencies": {

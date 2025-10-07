@@ -6,7 +6,7 @@ import { useStaticQuery, graphql } from "gatsby";
 
 import { routes } from "../data/routes";
 
-const SEO = ({ id, title, description, image, article }) => {
+const SEO = ({ id, title, description, image, article, lang = "en" }) => {
   const data = useStaticQuery(graphql`
     {
       site {
@@ -28,23 +28,29 @@ const SEO = ({ id, title, description, image, article }) => {
 
   const alternates = routes[id].map((alternate) => (
     <link
+      key={alternate.code}
       rel="alternate"
       hrefLang={alternate.code}
       href={`${siteUrl}${alternate.slug}`}
     />
   ));
 
-  alternates.push(<link rel="alternate" hreflang="x-default" href={siteUrl} />);
+  alternates.push(<link key="x-default" rel="alternate" hreflang="x-default" href={siteUrl} />);
 
+  const defaultImage = "/icon.png";
   const seo = {
     title: title || defaultTitle,
     description: description || defaultDescription,
-    // image: `${siteUrl}${image || defaultImage}`,
+    image: `${siteUrl}${image || defaultImage}`,
     url: `${siteUrl}${pathname}`,
   };
 
   return (
-    <Helmet title={seo.title} titleTemplate={titleTemplate}>
+    <Helmet
+      title={seo.title}
+      titleTemplate={titleTemplate}
+      htmlAttributes={{ lang }}
+    >
       {alternates && alternates}
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />

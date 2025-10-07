@@ -11,7 +11,8 @@ const IndexPage = ({ data }) => {
       <SEO
         id='home'
         title='Durchsuchen Sie Hunderte von Kategorien'
-        description='Kennen Sie die Geheimcodes von Netflix? Viele versteckte Kategorien erleichtern das Auffinden von Filmen und Serien. Greifen Sie direkt auf dieser Site auf die Codes zu.'
+        description='Entdecken Sie geheime Netflix-Kategorien! Viele versteckte Genres erleichtern das Auffinden von Filmen und Serien. Greifen Sie sofort auf die Kategorien zu.'
+        lang='de'
       />
       <IndexTemplate lang={de} />
     </>
