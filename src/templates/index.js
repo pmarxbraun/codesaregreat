@@ -3,6 +3,7 @@ import { graphql, useStaticQuery } from "gatsby";
 
 import Layout from "../components/layout";
 import Hero from "../components/hero";
+import { t } from "../data/translations";
 
 const Generator = lazy(() => import("../components/generator"));
 
@@ -25,9 +26,16 @@ const IndexTemplate = ({ lang }) => {
   );
 
   return (
-    <Layout>
+    <Layout lang={lang}>
       <Hero lang={lang} codes={uniqueCodes} />
-      <Suspense fallback={<div>isLoading...</div>}>
+      <Suspense
+        fallback={
+          // role="status" so the wait is announced instead of being silence.
+          <p role="status" className="p-6 text-center text-white">
+            {t(lang).loading}
+          </p>
+        }
+      >
         <Generator lang={lang} />
       </Suspense>
     </Layout>

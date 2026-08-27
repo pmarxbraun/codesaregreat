@@ -1,51 +1,24 @@
 import * as React from "react";
 import { SearchCombobox } from "./search-combobox";
-
-const translations = {
-  en: {
-    title: "Discover Netflix's Secret Categories",
-    subtitle: "Find Your Perfect Show in Seconds, Not Hours",
-    searchPlaceholder: "Select TV show or movie genre",
-  },
-  es: {
-    title: "Descubre las Categorías Ocultas de Netflix al Instante",
-    subtitle: "Encuentra tu Programa Perfecto en Segundos, No Horas",
-    searchPlaceholder: "Seleccione el género de la película",
-  },
-  fr: {
-    title: "Découvrez les catégories cachées de Netflix",
-    subtitle:
-      "Trouvez votre émission parfaite en quelques secondes, pas en heures",
-    searchPlaceholder: "Sélectionnez un genre",
-  },
-  de: {
-    title: "Entdecken Sie die versteckten Kategorien von Netflix",
-    subtitle: "Finden Sie Ihre perfekte Show in Sekunden, nicht Stunden",
-    searchPlaceholder: "Wählen Sie das Filmgenre",
-  },
-  ar: {
-    title: "اكتشف الفئات الخفية في نتفليكس",
-    subtitle: "ابحث عن البرنامج المثالي في ثوانٍ وليس ساعات",
-    searchPlaceholder: "اختر نوع الفيلم",
-  },
-};
+import { t } from "../data/translations";
 
 export default function Hero({ lang, codes }) {
+  const copy = t(lang);
+
   return (
     <div className="relative isolate mb-7 overflow-hidden bg-red-700">
       <div className="px-6 py-8 sm:px-6 sm:py-24 lg:px-8">
         <div className="mx-auto max-w-5xl text-center">
           <h1 className="text-2xl font-bold tracking-tight text-white sm:text-7xl">
-            {translations[lang].title}
+            {copy.title}
           </h1>
-          <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-gray-50/70 lg:text-2xl">
-            {translations[lang].subtitle}
+          {/* was text-gray-50/70 -> 3.65:1 on red-700, below the 4.5:1 AA
+              threshold at the mobile 16px size. */}
+          <p className="mx-auto mt-6 max-w-xl text-base leading-8 text-red-50 lg:text-2xl">
+            {copy.subtitle}
           </p>
           <div className="mx-auto mt-8 max-w-2xl">
-            <SearchCombobox
-              codes={codes}
-              placeholder={translations[lang].searchPlaceholder}
-            />
+            <SearchCombobox codes={codes} lang={lang} />
           </div>
         </div>
       </div>

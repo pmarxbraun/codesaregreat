@@ -5,6 +5,7 @@ import { useLocation } from "@reach/router";
 import { useStaticQuery, graphql } from "gatsby";
 
 import { routes } from "../data/routes";
+import { RTL_LANGS } from "../data/translations";
 
 const SEO = ({ id, title, description, image, article, lang = "en" }) => {
   const data = useStaticQuery(graphql`
@@ -35,7 +36,7 @@ const SEO = ({ id, title, description, image, article, lang = "en" }) => {
     />
   ));
 
-  alternates.push(<link key="x-default" rel="alternate" hreflang="x-default" href={siteUrl} />);
+  alternates.push(<link key="x-default" rel="alternate" hrefLang="x-default" href={siteUrl} />);
 
   const defaultImage = "/icon.png";
   const seo = {
@@ -49,7 +50,7 @@ const SEO = ({ id, title, description, image, article, lang = "en" }) => {
     <Helmet
       title={seo.title}
       titleTemplate={titleTemplate}
-      htmlAttributes={{ lang }}
+      htmlAttributes={{ lang, dir: RTL_LANGS.has(lang) ? "rtl" : "ltr" }}
     >
       {alternates && alternates}
       <meta name="description" content={seo.description} />
